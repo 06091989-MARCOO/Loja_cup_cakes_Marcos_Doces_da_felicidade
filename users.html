@@ -1,0 +1,110 @@
+<div class="content-header">
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Usuários Registrados</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">Usuários Registrados</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mx-auto">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title mb-2">Lista de Usuários</h3>
+                        <div class="card-tools">
+                            <form id="filters" method="get">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <div class="input-group m-0">
+                                            <input hidden="hidden" id="limit" name="limit"
+                                                   type="text" value="{{.Object.Filter.Pagination.Limit}}">
+                                            <input class="form-control" id="q" name="q" onclick="this.value = '';"
+                                                   placeholder="Pesquisar Usuário" type="text">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-default" type="submit">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>E-mail</th>
+                                <th>Criado Em</th>
+                                <th>Tipo</th>
+                                <th>Status</th>
+                                <th>Primeiro Login</th>
+                                <th>Último Login</th>
+                                <th>Opções</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{range .Object.Users}}
+                            <tr>
+                                <td>{{.ID}}</td>
+                                <td>
+                                    <a href="/users/user/{{.ID}}">{{.Email}}
+                                        <br/>
+                                    </a>
+                                </td>
+                                <td>{{.CreatedAt|date "02/01/2006 15:04h"}}</td>
+                                <td>{{if .IsStaff}}
+                                    <span class="badge badge-primary">Administrador</span>
+                                    {{else}}
+                                    <span class="badge badge-secondary">Membro</span>{{end}}
+                                </td>
+                                <td>{{if .IsActive}}
+                                    <span class="badge badge-success">Ativo</span>
+                                    {{else}}
+                                    <span class="badge badge-danger">Inativo</span>{{end}}
+                                </td>
+                                <td>{{if .FirstLogin.IsZero }} N/A {{else}} {{.FirstLogin|date "02/01/2006 15:04h"}}
+                                    {{end}}
+                                </td>
+                                <td>{{if .LastLogin.IsZero }} N/A {{else}} {{.LastLogin|date "02/01/2006 15:04h"}}
+                                    {{end}}
+                                </td>
+                                <td>
+                                    {{if not .IsStaff}}
+                                    <a class="btn btn-sm btn-outline-primary mr-2" href="/users/user/{{.ID}}">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-sm btn-outline-danger" href="/users/delete/{{.ID}}">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    {{else}}
+                                    -
+                                    {{end}}
+                                </td>
+                            </tr>
+                            {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                    {{template "snippets/pagination" .Object.Filter.Pagination}}
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+{{template "snippets/table-filter" }}
