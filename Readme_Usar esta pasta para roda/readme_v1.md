@@ -23,7 +23,7 @@ Abrir prompt de comando sobre a pasta "Simplicado_Loja_Marcos_Doces_da_Felicidad
 
 No prompt, digitar "go run main.go" para rodar o projeto.
 
-Click no link no PDF do projeto submetido no portal de atividades : "Link da solução em funcionamento".
+Click no link no PDF do projeto submetido no portal de atividades : "Link da solução em funcionamento" - Link = 🧁 Cupcake Real - Loja Virtual
 
 
 ### Informações importantes
